@@ -2,13 +2,16 @@ import { AppLoading } from 'expo';
 import { Asset } from 'expo-asset';
 import * as Font from 'expo-font';
 import React, { useState } from 'react';
-import { Platform, StatusBar, StyleSheet, View } from 'react-native';
+import { Platform, StatusBar, StyleSheet, View, Text } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-
+import { mapping, light as lightTheme } from '@eva-design/eva';
+import { ApplicationProvider } from 'react-native-ui-kitten';
+import AuthenticationScreen from './screens/authentication/AuthenticationScreen'
 import AppNavigator from './navigation/AppNavigator';
 
 export default function App(props) {
   const [isLoadingComplete, setLoadingComplete] = useState(false);
+  const [isLogged, setIsLogged] = useState(false);
 
   if (!isLoadingComplete && !props.skipLoadingScreen) {
     return (
@@ -18,13 +21,21 @@ export default function App(props) {
         onFinish={() => handleFinishLoading(setLoadingComplete)}
       />
     );
+  } else if (!isLogged){
+    return (
+        <ApplicationProvider
+            mapping={mapping}
+            theme={lightTheme}>
+          <AuthenticationScreen/>
+        </ApplicationProvider>
+    );
   } else {
     return (
-      <View style={styles.container}>
-        {Platform.OS === 'ios' && <StatusBar barStyle="default" />}
-        <AppNavigator />
-      </View>
-    );
+        <View style={styles.container}>
+          {Platform.OS === 'ios' && <StatusBar barStyle="default" />}
+          <AppNavigator />
+        </View>
+    )
   }
 }
 
