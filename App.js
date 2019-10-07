@@ -2,29 +2,44 @@ import { AppLoading } from 'expo';
 import { Asset } from 'expo-asset';
 import * as Font from 'expo-font';
 import React, { useState } from 'react';
-import { Platform, StatusBar, StyleSheet, View } from 'react-native';
+import { Platform, StatusBar, StyleSheet, View, Text } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-
+import { mapping, light as lightTheme, dark as darkTheme } from '@eva-design/eva';
+import { ApplicationProvider } from 'react-native-ui-kitten';
+import AuthenticationScreen from './screens/authentication/AuthenticationScreen'
 import AppNavigator from './navigation/AppNavigator';
 
 export default function App(props) {
   const [isLoadingComplete, setLoadingComplete] = useState(false);
+  const [isLogged, setIsLogged] = useState(true);
 
   if (!isLoadingComplete && !props.skipLoadingScreen) {
     return (
-      <AppLoading
-        startAsync={loadResourcesAsync}
-        onError={handleLoadingError}
-        onFinish={() => handleFinishLoading(setLoadingComplete)}
-      />
+        <AppLoading
+            startAsync={loadResourcesAsync}
+            onError={handleLoadingError}
+            onFinish={() => handleFinishLoading(setLoadingComplete)}
+        />
+    );
+  } else if (!isLogged){
+    return (
+        <ApplicationProvider
+            mapping={mapping}
+            theme={lightTheme}>
+          <AuthenticationScreen setLogged={setIsLogged}/>
+        </ApplicationProvider>
     );
   } else {
     return (
-      <View style={styles.container}>
-        {Platform.OS === 'ios' && <StatusBar barStyle="default" />}
-        <AppNavigator />
-      </View>
-    );
+        <ApplicationProvider
+            mapping={mapping}
+            theme={lightTheme}>
+          <View style={styles.container}>
+            {Platform.OS === 'ios' && <StatusBar barStyle="default" />}
+            <AppNavigator />
+          </View>
+        </ApplicationProvider>
+    )
   }
 }
 
