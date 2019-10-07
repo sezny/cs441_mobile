@@ -1,13 +1,13 @@
 import React, {useState} from 'react';
-import { ExpoConfigView } from '@expo/samples';
-import {SafeAreaView, ImageBackground, Text, Dimensions, View, TouchableOpacity} from 'react-native'
+import {Animated, SafeAreaView, Text, Dimensions, View, TouchableOpacity,} from 'react-native'
 import { Input, Button } from 'react-native-ui-kitten';
 import * as SecureStore from 'expo-secure-store';
 
-let deviceWidth = Dimensions.get('window').width;
 let deviceHeight = Dimensions.get('window').height;
 
-export default function LoginScreen({setSelected}) {
+export default function LoginScreen({setSelected, setLogged}) {
+    const [fade] = useState(new Animated.Value(1));
+    const [margin] = useState(new Animated.Value(1));
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
 
@@ -27,7 +27,7 @@ export default function LoginScreen({setSelected}) {
                 console.log(responseJson);
                 if (responseJson.token) {
                     SecureStore.setItemAsync("token", responseJson.token).then(() => {
-                        console.log("I did it")
+                        _loginDone();
                     })
                 }
             })
@@ -36,14 +36,34 @@ export default function LoginScreen({setSelected}) {
             });
     };
 
+    const _loginDone = () => {
+        Animated.timing(
+            fade,
+            {
+                toValue: 0,
+                duration: 1000,
+            }
+        ).start();
+        Animated.timing(
+            margin,
+            {
+                toValue: -150,
+                duration: 1000,
+            }
+        ).start();
+        setTimeout(() => {
+            setLogged(true);
+        }, 1000)
+    };
+
     return (
         <View
             style={{flex: 1}}>
             <SafeAreaView>
                 <View style={{alignItems: 'flex-end', height: deviceHeight / 4, marginTop: 40, marginRight: 20}}>
-                    <Text style={{fontSize: 35, fontWeight: "800", color: 'white'}}>Nice to see you</Text>
+                    <Animated.Text style={{fontSize: 35, fontWeight: "800", color: 'white', marginTop: margin, position: 'absolute'}}>Nice to see you</Animated.Text>
                 </View>
-                <View style={{margin: 20}}>
+                <Animated.View style={{margin: 20, opacity: fade}}>
                     <Input
                         placeholder={"Your username"}
                         value={username}
@@ -66,7 +86,7 @@ export default function LoginScreen({setSelected}) {
                         onPress={() => loginServer()}>
                         Login
                     </Button>
-                </View>
+                </Animated.View>
             </SafeAreaView>
         </View>
     );

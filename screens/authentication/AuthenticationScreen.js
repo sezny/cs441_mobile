@@ -6,7 +6,7 @@ import RegisterScreen from './RegisterScreen';
 let deviceWidth = Dimensions.get('window').width;
 let deviceHeight = Dimensions.get('window').height;
 
-export default function AuthenticationScreen() {
+export default function AuthenticationScreen({setLogged}) {
     const [selected, setSelected] = useState(0);
 
     const onIndexChange = (index) => {
@@ -19,7 +19,7 @@ export default function AuthenticationScreen() {
             blurRadius={100}
             source={require('../../assets/images/shutterstock_1068141515.jpg')}>
             {selected === 0 ? (
-                <LoginScreen setSelected={setSelected}>
+                <LoginScreen setSelected={setSelected} setLogged={setLogged}>
                     <Text>Tab 1</Text>
                 </LoginScreen>
             ) : (
