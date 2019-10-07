@@ -45,7 +45,7 @@ export default function LoginScreen({setSelected}) {
                 </View>
                 <View style={{margin: 20}}>
                     <Input
-                        placeholder={"Your user name"}
+                        placeholder={"Your username"}
                         value={username}
                         onChangeText={text => setUsername(text)}
                     />
@@ -57,7 +57,7 @@ export default function LoginScreen({setSelected}) {
                     />
                     <TouchableOpacity onPress={() => setSelected(1)}
                         style={{alignItems: 'flex-end'}}>
-                        <Text style={{color: 'white', marginTop: 20, fontSize: 18, textDecorationLine: 'underline'}}>No account yet ?</Text>
+                        <Text style={{color: 'white', marginTop: 20, fontSize: 18, textDecorationLine: 'underline'}}>No account yet?</Text>
                     </TouchableOpacity>
                     <Button
                         style={{marginTop: 30}}
