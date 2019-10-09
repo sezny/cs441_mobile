@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {FlatList, StyleSheet, Text, View} from "react-native";
+import {FlatList, StyleSheet, Text, View, TouchableOpacity} from "react-native";
 import { light } from '@eva-design/eva';
 import { AntDesign } from '@expo/vector-icons';
 
@@ -9,18 +9,18 @@ const DAYS = ['Today', 'Tomorrow', 'This week', 'This month'];
 export default function SearchList() {
     const _renderItem = (item) => {
         return (
-            <View style={styles.item}>
+            <TouchableOpacity style={styles.item}>
                 <Text style={styles.text}>{item}</Text>
-            </View>
+            </TouchableOpacity>
         )
     };
 
     const _renderItemHeader = (item) => {
         return (
-            <View style={styles.itemHeader}>
+            <TouchableOpacity style={styles.itemHeader}>
                 <AntDesign style={{marginLeft: 5}} name="pluscircle" size={15} color="#274BDB" />
                 <Text style={[styles.itemHeaderText, styles.text]}>Create</Text>
-            </View>
+            </TouchableOpacity>
         )
     };
 
@@ -28,11 +28,12 @@ export default function SearchList() {
         <View>
             <FlatList
                 data={DAYS}
-                keyExtractor={item => item.id}
+                keyExtractor={item => item}
                 key={item => item.id}
                 horizontal={true}
                 ListHeaderComponent={() => _renderItemHeader()}
                 renderItem={({item}) => _renderItem(item)}
+                showsHorizontalScrollIndicator={false}
             />
         </View>
     )
