@@ -42,19 +42,24 @@ export default function RecommendedList() {
     const _renderEventItem = (item) => {
         console.log(item);
         return (
-            <View style={styles.itemContainer}>
+            <TouchableOpacity style={styles.itemContainer}>
                 <Image
                     style={{width: 180, height: 70, borderRadius: 10}}
                     resizeMode={'cover'}
                     source={{ uri: 'https://d301qp0kpaemqw.cloudfront.net/nonprofits/1c8206c0-c23c-40c4-8f65-cd8dcbb9c5a6/events/e1b59c43-e5ad-40a3-ad82-577e5f30012a/processed_8f5be2eff9c98718c75ec89a9514812be6a46bcca5f9b619d0468e796c8372f4_background_image.jpg'}}
                 />
-            </View>
+                <View style={styles.textContainer}>
+                    <Text style={{color: '#FF1654', fontWeight: '500', fontSize: 14}}>SUN, OCT 13 - 9 AM</Text>
+                    <Text style={{fontSize: 16, fontWeight: 600, flexWrap: "wrap"}}>San Marcos Harvest Festival</Text>
+                    <Text style={{fontSize: 14, color: '#858585'}}>All along via Vera</Text>
+                </View>
+            </TouchableOpacity>
         )
     };
 
     return (
         <View>
-            <Text style={{fontSize: 24, marginLeft: 20, marginBottom: 10, marginTop: 10, fontWeight: 600}}>For you</Text>
+            <Text style={{fontSize: 24, marginLeft: 20, marginBottom: 10, marginTop: 10, fontWeight: '600'}}>For you</Text>
             <FlatList
                 contentContainerStyle={styles.list}
                 // style={styles.list}
@@ -69,48 +74,20 @@ export default function RecommendedList() {
 
 const styles = StyleSheet.create({
     list: {
-        backgroundColor: '#fafafa',
         alignItems: 'center'
     },
     itemContainer: {
-        height: 70,
-        flexDirection: 'row',
-        backgroundColor: 'white',
+        height: 180,
+        width: 180,
+        flexDirection: 'column',
         marginBottom: 10,
         marginTop: 10,
         alignItems: 'center',
         borderRadius: 10,
-        margin: 5
+        margin: 5,
     },
-    dateContainer: {
-        height: 60,
-        backgroundColor: '#f6f6f6',
-        borderRadius: 10,
-        justifyContent: 'center',
-        alignItems: 'center',
-        marginLeft: 10,
-        marginRight: 10,
-    },
-    dateDivider: {
-        height: 2,
-        backgroundColor: 'white',
-        marginLeft: 5,
-        marginRight: 5
-    },
-    dateBoxes: {
-        justifyContent: 'space-evenly',
-        height: 60
-    },
-    date: {
-        paddingLeft: 10,
-        paddingRight: 10,
-        color: '#cb140d',
-        fontSize: 15
-    },
-    header: {
-        flexDirection: 'row',
-        width: '100%',
-        alignItems: 'center',
-        marginBottom: 20
+    textContainer: {
+        height: 100,
+        justifyContent: 'space-around',
     }
 });
