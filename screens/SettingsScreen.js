@@ -1,9 +1,11 @@
 import React, {useState} from 'react';
 import { ExpoConfigView } from '@expo/samples';
-import { SafeAreaView, ImageBackground, Text, Dimensions, View, TouchableOpacity, ScrollView, Picker, Modal, StyleSheet, FlatList, ActiviityIndicator} from 'react-native';
+import {SafeAreaView, ImageBackground, Text, Dimensions, View, TouchableOpacity, ScrollView, Picker, Modal, StyleSheet, FlatList, ActiviityIndicator} from 'react-native';
 import { Input, Button } from 'react-native-ui-kitten';
 import WeekView from 'react-native-week-view';
+import {Overlay } from 'react-native-elements';
 import * as SecureStore from 'expo-secure-store';
+import DatePicker from 'react-native-datepicker';
 
 
 let deviceHeight = Dimensions.get('window').height;
@@ -17,7 +19,16 @@ export default function SettingsScreen() {
    const[email] = useState('CN@gmail.com');
    const[major] = useState('CS');
    const[school] = useState('San Marcos'); 
+   const[startDate, setStartDate] = useState('10-21-2019');
+   const[endDate, setEndDate] = useState('');
+   const[eventDesc, setDesc] = useState('');
+   const[eventName, setEventName] = useState(''); 
    
+   
+
+       function createEvent(){
+           
+       }
 
    
    /*getInfo(){
@@ -48,12 +59,19 @@ export default function SettingsScreen() {
             <Text style = {styles.item}>School</Text>
             <Text style = {styles.info}>{school}</Text>
     </View>
-    <View style = {styles.scheduleDisplay}>
-        <WeekView selectedDate={new Date()} numberOfDays={7}>
+    <View style={styles.scheduleDisplay}>
+        <WeekView selectedDate={new Date()} numberOfDays={3} headerStyle={styles.headerStyle} locale='fr'>
         </WeekView>    
-    </View>
+   </View>
+   <View style = {styles.addEventView}>
+        <Text style={styles.addEventText}>Add Event to Schedule</Text>
+        <DatePicker style={styles.datePicker} date={startDate} mode='date' placeholder='select date' format="MM-DD-YYYY" minDate="05-01-2016" maxDate="05-01-2016" onDateChange={date=>setStartDate(date)} confirmBtnText ='Confirm' cancelBtnText='Cancel'/>
+        <DatePicker style={styles.datePicker} date={new Date()} mode='date' placeholder='select date' format="MM-DD-YYYY" minDate='09-30-2019' maxDate="12-31-2020" onDateChange={date=>setEndDate(date)} confirmBtnText ='Confirm' cancelBtnText='Cancel' />
+        <Input placeholder="Add event description here" value={eventDesc} onChangeText = {text => setDesc(text)}/>
+        <Button style={{marginTop:30}} size="large" onPress={() => createEvent()}>Add Event</Button>
+   </View>
     <View>
-        <Button style={{marginTop: 30}} color= "#0000ff" status="danger" size= "large" onPres={() => updatePersonalInfo()}>Update Personal Info</Button>
+        <Button style={{marginTop: 30}} status="danger" size= "large" onPres={() => updatePersonalInfo()} >Update Personal Info</Button>
     </View>
   </ScrollView>
   );
@@ -64,6 +82,23 @@ SettingsScreen.navigationOptions = {
 
 };
 const styles = StyleSheet.create({
+    datePicker:{
+        flex: 1,
+        width: 200
+    },
+    addEventView:{
+        borderColor: "red",
+        borderRadius: 4,
+        borderWidth: 1,
+        marginTop: 30
+    },
+    addEventText:{
+        textAlign: 'center',
+        fontSize: 20
+    },
+    headerStyle:{
+        backgroundColor: '#4286f4'
+    },
     row:{
         flex:1, 
         flexDirection: 'row',
@@ -87,7 +122,7 @@ const styles = StyleSheet.create({
         borderColor: "red",
         borderRadius:4,
         borderWidth: 1, 
-        height: 300, 
+        height: 500, 
         marginTop: 30
     }
     });
