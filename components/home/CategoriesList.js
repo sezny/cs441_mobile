@@ -17,13 +17,9 @@ const DATA = [
         color: '#B2DBBF'
     },
     {
-        name: 'Sport',
+        name: 'Chill',
         color: '#F3FFBD'
-    },
-    {
-        name: 'Sport',
-        color: '#FF1654'
-    },
+    }
 ];
 
 export default function CategoriesList() {
@@ -37,12 +33,12 @@ export default function CategoriesList() {
 
     return (
         <View>
-            <Text style={{fontSize: 24, marginLeft: 20, marginBottom: 10, marginTop: 10, fontWeight: 600}}>Take a look</Text>
+            <Text style={{fontSize: 24, marginLeft: 20, marginBottom: 10, marginTop: 10, fontWeight: "600"}}>Take a look</Text>
             <FlatList
                 data={DATA}
                 horizontal={true}
                 renderItem={( item ) => _renderItem(item)}
-                keyExtractor={item => item}
+                keyExtractor={item => item.name}
                 showsHorizontalScrollIndicator={false}
             />
 
