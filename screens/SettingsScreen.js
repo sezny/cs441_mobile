@@ -14,21 +14,40 @@ let deviceWidth = Dimensions.get('window').width;
 export default function SettingsScreen() {
 
 
-    const[username, getUsername, setUsername] = useState('Cnixon12');
-    const[name] = useState('Curtis Nixon');
-    const[email] = useState('CN@gmail.com');
-    const[major] = useState('CS');
-    const[school] = useState('San Marcos');
-    const[startDate, setStartDate] = useState('10-21-2019');
-    const[endDate, setEndDate] = useState('');
-    const[eventDesc, setDesc] = useState('');
-    const[eventName, setEventName] = useState('');
 
+   const[username, getUsername, setUsername] = useState('Cnixon12');
+   const[name] = useState('Curtis Nixon');
+   const[email] = useState('CN@gmail.com');
+   const[major] = useState('CS');
+   const[school] = useState('San Marcos');
+   const[startDate, setStartDate] = useState('10-21-2019');
+   const[endDate, setEndDate] = useState('');
+   const[eventDesc, setDesc] = useState('');
+   const[eventName, setEventName] = useState('');
 
+    selectedDate = new Date();
 
-    function createEvent(){
-
+  generateDates = (hours, minutes) => {
+    const date = new Date();
+    date.setHours(date.getHours() + hours);
+    if (minutes != null) {
+      date.setMinutes(minutes);
     }
+    return date;
+  };
+    var eventList = [
+        {id:1,
+        description:'Fake Event',
+        startDate: this.generateDates(0),
+        endDate:  this.generateDates(1),
+        color: 'blue',}
+    ];
+
+       function createEvent(){
+           console.log("Clicked");
+
+       }
+
 
 
     /*getInfo(){
@@ -60,11 +79,12 @@ export default function SettingsScreen() {
                 <Text style = {styles.info}>{school}</Text>
             </View>
             <View style={styles.scheduleDisplay}>
-                <WeekView selectedDate={new Date()} numberOfDays={3} headerStyle={styles.headerStyle} locale='fr'>
+                <WeekView selectedDate={new Date()} numberOfDays={3} headerStyle={styles.headerStyle} locale='fr' events={eventList}>
                 </WeekView>
             </View>
             <View style = {styles.addEventView}>
                 <Text style={styles.addEventText}>Add Event to Schedule</Text>
+                <Input placeholder="Event Title" value={eventName} onChangeText={text => setEventName(text)} style={styles.inputStyle}/>
                 <DatePicker customStyles={{
                     datePicker: { backgroundColor: '#222'  },
                     datePickerCon: { backgroundColor: '#333' },
@@ -81,8 +101,24 @@ export default function SettingsScreen() {
                         color: 'black'
                     },
                     // ... You can check the source to find the other keys.
-                }} date={startDate} mode='date' placeholder='select date' format="MM-DD-YYYY" minDate="05-01-2016" maxDate="05-01-2020" onDateChange={date=>setStartDate(date)} confirmBtnText ='Confirm' cancelBtnText='Cancel'/>
-                <DatePicker style={styles.datePicker} date={new Date()} mode='date' placeholder='select date' format="MM-DD-YYYY" minDate='09-30-2019' maxDate="12-31-2020" onDateChange={date=>setEndDate(date)} confirmBtnText ='Confirm' cancelBtnText='Cancel' />
+                }} style={styles.datePicker} date={startDate} mode='date' placeholder='select date' format="MM-DD-YYYY" minDate="05-01-2016" maxDate="05-01-2020" onDateChange={date=>setStartDate(date)} confirmBtnText ='Confirm' cancelBtnText='Cancel'/>
+                <DatePicker customStyles={{
+                    datePicker: { backgroundColor: '#222'  },
+                    datePickerCon: { backgroundColor: '#333' },
+                    dateIcon: {
+                        position: 'absolute',
+                        left: 0,
+                        top: 4,
+                        marginLeft: 0
+                    },
+                    dateInput: {
+                        marginLeft: 36
+                    },
+                    dateText: {
+                        color: 'black'
+                    },
+                    // ... You can check the source to find the other keys.
+                }} style={styles.datePicker} date={new Date()} mode='date' placeholder='select date' format="MM-DD-YYYY" minDate='09-30-2019' maxDate="12-31-2020" onDateChange={date=>setEndDate(date)} confirmBtnText ='Confirm' cancelBtnText='Cancel' />
                 <Input placeholder="Add event description here" value={eventDesc} onChangeText = {text => setDesc(text)}/>
                 <Button style={{marginTop:30}} size="large" onPress={() => createEvent()}>Add Event</Button>
             </View>
@@ -91,6 +127,7 @@ export default function SettingsScreen() {
             </View>
         </ScrollView>
     );
+
 }
 
 SettingsScreen.navigationOptions = {
@@ -102,10 +139,13 @@ const styles = StyleSheet.create({
         flex: 1,
         width: 200
     },
+    inputStyle:{
+        textAlign: 'center'
+    },
     addEventView:{
         borderColor: "red",
         borderRadius: 4,
-        borderWidth: 1,
+        borderWidth: 3,
         marginTop: 30
     },
     addEventText:{
@@ -138,7 +178,8 @@ const styles = StyleSheet.create({
         borderColor: "red",
         borderRadius:4,
         borderWidth: 1,
-        height: 500,
+        height: 400,
         marginTop: 30
     }
 });
+
