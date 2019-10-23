@@ -42,7 +42,7 @@ export default function TodayList() {
 
     return (
         <View>
-            <Text style={{fontSize: 24, marginLeft: 20, marginBottom: 10, marginTop: 10, fontWeight: 600}}>Today</Text>
+            <Text style={{fontSize: 24, marginLeft: 20, marginBottom: 10, marginTop: 10, fontWeight: '600'}}>Today</Text>
             <Carousel
                 ref={(c) => { this._carousel = c; }}
                 data={DATA}

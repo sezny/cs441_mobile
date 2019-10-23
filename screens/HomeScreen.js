@@ -13,7 +13,8 @@ import SearchList from '../components/home/SearchList';
 import TodayList from '../components/home/TodayList'
 import CategoriesList from '../components/home/CategoriesList';
 import RecommendedList from '../components/home/RecommendedList';
-import {MaterialIcons} from '@expo/vector-icons'
+import {AntDesign, MaterialIcons} from '@expo/vector-icons'
+import SearchModal from '../components/home/Search';
 
 const DATA = [
     {
@@ -52,6 +53,7 @@ const DATA = [
 
 export default function HomeScreen() {
     const [search, setSearch] = useState('Foot');
+    const [searchVisible, setSearchVisible] = useState(true);
     const _renderEventItem = (item) => {
         console.log(item);
         return (
@@ -72,24 +74,20 @@ export default function HomeScreen() {
 
     return (
         <SafeAreaView style={styles.container}>
-            <Text style={{fontSize: 26, marginLeft: 20, marginBottom: 10, fontWeight: 700}}>Events</Text>
+            <SearchModal visible={searchVisible} setSearchVisible={setSearchVisible}/>
+            <View style={styles.containerHeader}>
+                <Text style={{fontSize: 26, marginLeft: 20, marginBottom: 10, fontWeight: "700"}}>Events</Text>
+                <TouchableOpacity onPress={() => {
+                    setSearchVisible(true)
+                }}>
+                    <MaterialIcons style={{marginRight: 15}} name="search" size={30} color="#274BDB" />
+                </TouchableOpacity>
+            </View>
             <SearchList/>
             <ScrollView style={{backgroundColor: '#f5f5f5'}}>
-                {/*<View style={styles.header}>*/}
-                {/*    <TouchableOpacity style={{margin: 10}}>*/}
-                {/*        <MaterialIcons name="add" size={32} color="blue" />*/}
-                {/*    </TouchableOpacity>*/}
-                {/*    <Input style={{width: '80%', borderRadius: 10}}/>*/}
-                {/*</View>*/}
                 <TodayList/>
                 <CategoriesList/>
                 <RecommendedList/>
-                {/*<FlatList*/}
-                {/*    style={styles.list}*/}
-                {/*    data={DATA}*/}
-                {/*    keyExtractor={item => item.id}*/}
-                {/*    key={item => item.id}*/}
-                {/*    renderItem={({item}) => _renderEventItem(item)} />*/}
             </ScrollView>
         </SafeAreaView>
     );
@@ -103,6 +101,11 @@ HomeScreen.navigationOptions = {
 const styles = StyleSheet.create({
     container: {
         flex: 1
+    },
+    containerHeader: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-between'
     },
     list: {
         backgroundColor: '#fafafa'

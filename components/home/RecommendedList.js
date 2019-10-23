@@ -50,7 +50,7 @@ export default function RecommendedList() {
                 />
                 <View style={styles.textContainer}>
                     <Text style={{color: '#FF1654', fontWeight: '500', fontSize: 14}}>SUN, OCT 13 - 9 AM</Text>
-                    <Text style={{fontSize: 16, fontWeight: 600, flexWrap: "wrap"}}>San Marcos Harvest Festival</Text>
+                    <Text style={{fontSize: 16, fontWeight: "600", flexWrap: "wrap"}}>San Marcos Harvest Festival</Text>
                     <Text style={{fontSize: 14, color: '#858585'}}>All along via Vera</Text>
                 </View>
             </TouchableOpacity>
@@ -59,7 +59,7 @@ export default function RecommendedList() {
 
     return (
         <View>
-            <Text style={{fontSize: 24, marginLeft: 20, marginBottom: 10, marginTop: 10, fontWeight: '600'}}>For you</Text>
+            <Text style={{fontSize: 24, marginLeft: 20, marginBottom: 10, marginTop: 10, fontWeight: "600"}}>For you</Text>
             <FlatList
                 contentContainerStyle={styles.list}
                 // style={styles.list}
