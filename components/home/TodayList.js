@@ -6,12 +6,12 @@ let deviceWidth = Dimensions.get('window').width;
 const DATA = [
     {
         "id": 1,
-        "title": "titre 1",
+        "title": "Title 1",
         "description": null,
     },
     {
         "id": 2,
-        "title": "titre 2",
+        "title": "Title 2",
         "description": "cool event  2",
     },
     {
