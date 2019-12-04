@@ -65,6 +65,7 @@ export default function LoginScreen({setSelected, setLogged}) {
                         onChangeText={text => setUsername(text)}
                     />
                     <Input
+                        secureTextEntry={true}
                         style={{marginTop: 20}}
                         placeholder={"Your password"}
                         value={password}

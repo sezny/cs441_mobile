@@ -53,7 +53,7 @@ export default function SettingsScreen() {
         console.log("Hello")
     }
 
-    selectedDate = new Date();
+    let selectedDate = new Date();
 
        function createEvent(){
          var eDate = new Date(endDate);
@@ -177,6 +177,9 @@ export default function SettingsScreen() {
             <View>
                 <SearchModal2 visible={updateInfoModalVisible} setUpdateInfoModalVisible={setUpdateInfoModalVisible} username={username} name={name} email={email} major={major} school={school} setUsername={setUsername} setName={setName} setEmail={setEmail} setMajor={setMajor} setSchool={setSchool}/>
                 <Button style={{marginTop: 30}} status="danger" size= "large" onPress={() => {getInfo()}}>Update Personal Info</Button>
+                <Button style={{marginTop: 30}} status="danger" size= "large" onPress={() => {
+                    SecureStore.deleteItemAsync("token");
+                }}>Log out</Button>
             </View>
         </ScrollView>
     );
