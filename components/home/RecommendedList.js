@@ -40,7 +40,6 @@ const DATA = [
 
 export default function RecommendedList() {
     const _renderEventItem = (item) => {
-        console.log(item);
         return (
             <TouchableOpacity style={styles.itemContainer}>
                 <Image

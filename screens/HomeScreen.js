@@ -15,6 +15,7 @@ import CategoriesList from '../components/home/CategoriesList';
 import RecommendedList from '../components/home/RecommendedList';
 import {AntDesign, MaterialIcons} from '@expo/vector-icons'
 import SearchModal from '../components/home/Search';
+import CreateModal from '../components/home/Create';
 
 const DATA = [
     {
@@ -52,40 +53,25 @@ const DATA = [
 ];
 
 export default function HomeScreen() {
-    const [search, setSearch] = useState('Foot');
-    const [searchVisible, setSearchVisible] = useState(true);
-    const _renderEventItem = (item) => {
-        console.log(item);
-        return (
-            <View style={styles.itemContainer}>
-                <View style={styles.dateContainer}>
-                    <View style={styles.dateBoxes}>
-                        <Text style={styles.date}>Monday</Text>
-                        <View style={styles.dateDivider}/>
-                        <Text style={styles.date}>2 - 3 pm</Text>
-                    </View>
-                </View>
-                <Text>
-                    {item.title}
-                </Text>
-            </View>
-        )
-    };
+    const [searchVisible, setSearchVisible] = useState(false);
+    const [createVisible, setCreateVisible] = useState(false);
 
     return (
         <SafeAreaView style={styles.container}>
             <SearchModal visible={searchVisible} setSearchVisible={setSearchVisible}/>
+            <CreateModal visible={createVisible} setCreateVisible={setCreateVisible}/>
             <View style={styles.containerHeader}>
-                <Text style={{fontSize: 26, marginLeft: 20, marginBottom: 10, fontWeight: "700"}}>Events</Text>
+                <Text style={styles.eventTitle}>Events</Text>
                 <TouchableOpacity onPress={() => {
                     setSearchVisible(true)
                 }}>
                     <MaterialIcons style={{marginRight: 15}} name="search" size={30} color="#274BDB" />
                 </TouchableOpacity>
             </View>
-            <SearchList/>
+            <SearchList setCreateVisible={setCreateVisible}/>
             <ScrollView style={{backgroundColor: '#f5f5f5'}}>
                 <TodayList/>
+
                 <CategoriesList/>
                 <RecommendedList/>
             </ScrollView>
@@ -149,5 +135,8 @@ const styles = StyleSheet.create({
         width: '100%',
         alignItems: 'center',
         marginBottom: 20
+    },
+    eventTitle: {
+        fontSize: 26, marginLeft: 20, marginBottom: 10, fontWeight: "700"
     }
 });

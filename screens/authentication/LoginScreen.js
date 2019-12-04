@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import {Animated, SafeAreaView, Text, Dimensions, View, TouchableOpacity,} from 'react-native'
 import { Input, Button } from 'react-native-ui-kitten';
 import * as SecureStore from 'expo-secure-store';
-
+import config from '../../constants/Config'
 let deviceHeight = Dimensions.get('window').height;
 
 export default function LoginScreen({setSelected, setLogged}) {
@@ -12,25 +12,20 @@ export default function LoginScreen({setSelected, setLogged}) {
     const [password, setPassword] = useState('');
 
     const loginServer = () => {
-        fetch('https://reqres.in/api/login', {
+        console.log(config.addr);
+        fetch(config.addr + '/users/sign_in?user[email]=luke@csusm.edu&user[password]=Password', {
             method: 'POST',
             headers: {
                 Accept: 'application/json',
                 'Content-Type': 'application/json',
+                Authentication: 'secret',
             },
-            body: JSON.stringify({
-                email: 'eve.holt@reqres.in',
-                password: 'cityslicka',
-            }),
-        }).then((response) => response.json())
-            .then((responseJson) => {
-                console.log(responseJson);
-                if (responseJson.token) {
-                    SecureStore.setItemAsync("token", responseJson.token).then(() => {
-                        _loginDone();
-                    })
-                }
-            })
+        }).then((response) => {
+            let token = response.headers.get('Authorization');
+            SecureStore.setItemAsync("token", token).then(() => {
+                _loginDone();
+            });
+            return response.json()})
             .catch((error) => {
                 console.error(error);
             });

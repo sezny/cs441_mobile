@@ -27,7 +27,7 @@ export default function SettingsScreen() {
 
 
     function createEvent(){
-
+        console.log("Hello")
     }
 
 
@@ -60,7 +60,7 @@ export default function SettingsScreen() {
                 <Text style = {styles.info}>{school}</Text>
             </View>
             <View style={styles.scheduleDisplay}>
-                <WeekView selectedDate={new Date()} numberOfDays={3} headerStyle={styles.headerStyle} locale='fr'>
+                <WeekView onEventPress={createEvent} selectedDate={new Date()} numberOfDays={3} headerStyle={styles.headerStyle} locale='fr'>
                 </WeekView>
             </View>
             <View style = {styles.addEventView}>

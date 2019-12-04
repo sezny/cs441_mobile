@@ -33,6 +33,9 @@ export default function Search({visible, setSearchVisible}) {
                 <View style={styles.dividerContainer}>
                     <View style={styles.divider}/>
                 </View>
+                <View>
+                    
+                </View>
             </View>
         </Modal>
     )

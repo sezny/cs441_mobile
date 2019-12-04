@@ -3,6 +3,7 @@ import { ExpoConfigView } from '@expo/samples';
 import {SafeAreaView, ImageBackground, Text, Dimensions, View, TouchableOpacity, ScrollView, Picker, Modal} from 'react-native'
 import { Input, Button } from 'react-native-ui-kitten';
 import * as SecureStore from 'expo-secure-store';
+import config from '../../constants/Config'
 
 let deviceWidth = Dimensions.get('window').width;
 let deviceHeight = Dimensions.get('window').height;
@@ -16,29 +17,17 @@ export default function RegisterScreen({setSelected}) {
     const [major, setMajor] = useState('');
     const [school, setSchool] = useState('');
 
-
     const registerToServer = () => {
 
-        fetch('https://reqres.in/api/login', {
-            method: 'POST',
+        fetch(config.addr + '/users/sign_up?user[email]=' + email + '&user[password]='+ password + '&user[password_confirmation]='+ password, {
+            method: 'GET',
             headers: {
                 Accept: 'application/json',
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({
-                email: 'eve.holt@reqres.in',
-                password: 'cityslicka',
-            }),
         }).then((response) => response.json())
             .then((responseJson) => {
-                console.log(responseJson);
-                if (responseJson.token) {
-                    SecureStore.setItemAsync("token", responseJson.token).then(() => {
-                        console.log("I did it")
-                    })
-                    console.log(school);
-                    console.log(major);
-                }
+                setSelected(0);
             })
             .catch((error) => {
                 console.error(error);
@@ -54,10 +43,16 @@ export default function RegisterScreen({setSelected}) {
                     <Text style={{fontSize: 35, fontWeight: "800", color: 'white'}}>Join us</Text>
                 </View>
                 <View style={{margin: 20}}>
+                    {/*<Input*/}
+                    {/*    placeholder={"Your username"}*/}
+                    {/*    value={username}*/}
+                    {/*    onChangeText={text => setUsername(text)}*/}
+                    {/*/>*/}
                     <Input
-                        placeholder={"Your username"}
-                        value={username}
-                        onChangeText={text => setUsername(text)}
+                        style={{marginTop: 20}}
+                        placeholder={"Your Email"}
+                        value={email}
+                        onChangeText={text => setEmail(text)}
                     />
                     <Input
                         style={{marginTop: 20}}
@@ -65,57 +60,52 @@ export default function RegisterScreen({setSelected}) {
                         value={password}
                         onChangeText={text => setPassword(text)}
                     />
-                    <Input
-                        style={{marginTop: 20}}
-                        placeholder={"Your Name"}
-                        value={name}
-                        onChangeText={text => setName(text)}
-                    />
-                    <Input
-                        style={{marginTop: 20}}
-                        placeholder={"Your Email"}
-                        value={email}
-                        onChangeText={text => setEmail(text)}
-                    />
-                    <View style={{alignItems:'center'}}>
-                        <Text style = {{
-                                marginTop:20,
-                                fontSize: 20,
-                                color: 'white'
-                                
-                            }
-                        }>Select School Below</Text>
+                    {/*<Input*/}
+                    {/*    style={{marginTop: 20}}*/}
+                    {/*    placeholder={"Your Name"}*/}
+                    {/*    value={name}*/}
+                    {/*    onChangeText={text => setName(text)}*/}
+                    {/*/>*/}
+
+                    {/*<View style={{alignItems:'center'}}>*/}
+                    {/*    <Text style = {{*/}
+                    {/*            marginTop:20,*/}
+                    {/*            fontSize: 20,*/}
+                    {/*            color: 'white'*/}
+                    {/*            */}
+                    {/*        }*/}
+                    {/*    }>Select School Below</Text>*/}
                     
-                    </View>
-                    <Picker     style={{height:80}} 
-                                    itemStyle={{height:80}}
-                                    selectedValue = {school}
-                                    onValueChange={(itemValue, itemIndex) => setSchool(itemValue)}
-                                    >
-                        <Picker.Item label = "CalState San Marcos" value = "San Marcos" />
-                        <Picker.Item label = "San Diego Sate University" value = "SD State" />
-                        <Picker.Item label = "University of San Diego" value = "USD" />
-                        <Picker.Item label = "University of California San Diego" value= "UCSD" />
-                    </Picker>
-                    <View style={{alignItems:'center'}}>
-                        <Text style = {{
-                                marginTop:20,
-                                fontSize: 20,
-                                color: 'white'
-                                
-                            }
-                        }>Select Major Below</Text>
-                    </View>
-                    <Picker     style={{height:80}} 
-                                    itemStyle={{height:80}}
-                                    selectedValue = {major}
-                                    onValueChange={(itemValue, itemIndex) => setMajor(itemValue)}
-                                    >
-                        <Picker.Item label = "Computer Science" value = "Computer Science" />
-                        <Picker.Item label = "Nursing" value = "Nursing" />
-                        <Picker.Item label = "Business" value = "Business" />
-                        <Picker.Item label = "Computer Information Systems" value= "CIS" />
-                    </Picker>
+                    {/*</View>*/}
+                    {/*<Picker     style={{height:80}} */}
+                    {/*                itemStyle={{height:80}}*/}
+                    {/*                selectedValue = {school}*/}
+                    {/*                onValueChange={(itemValue, itemIndex) => setSchool(itemValue)}*/}
+                    {/*                >*/}
+                    {/*    <Picker.Item label = "CalState San Marcos" value = "San Marcos" />*/}
+                    {/*    <Picker.Item label = "San Diego Sate University" value = "SD State" />*/}
+                    {/*    <Picker.Item label = "University of San Diego" value = "USD" />*/}
+                    {/*    <Picker.Item label = "University of California San Diego" value= "UCSD" />*/}
+                    {/*</Picker>*/}
+                    {/*<View style={{alignItems:'center'}}>*/}
+                    {/*    <Text style = {{*/}
+                    {/*            marginTop:20,*/}
+                    {/*            fontSize: 20,*/}
+                    {/*            color: 'white'*/}
+                    {/*            */}
+                    {/*        }*/}
+                    {/*    }>Select Major Below</Text>*/}
+                    {/*</View>*/}
+                    {/*<Picker     style={{height:80}} */}
+                    {/*                itemStyle={{height:80}}*/}
+                    {/*                selectedValue = {major}*/}
+                    {/*                onValueChange={(itemValue, itemIndex) => setMajor(itemValue)}*/}
+                    {/*                >*/}
+                    {/*    <Picker.Item label = "Computer Science" value = "Computer Science" />*/}
+                    {/*    <Picker.Item label = "Nursing" value = "Nursing" />*/}
+                    {/*    <Picker.Item label = "Business" value = "Business" />*/}
+                    {/*    <Picker.Item label = "Computer Information Systems" value= "CIS" />*/}
+                    {/*</Picker>*/}
                     <TouchableOpacity onPress={() => setSelected(0)}
                                       style={{alignItems: 'flex-end'}}>
                         <Text style={{color: 'white', marginTop: 20, fontSize: 18, textDecorationLine: 'underline'}}>Already have an account?</Text>
