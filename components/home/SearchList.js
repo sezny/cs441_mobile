@@ -6,7 +6,7 @@ import { AntDesign } from '@expo/vector-icons';
 const DAYS = ['Today', 'Tomorrow', 'This week', 'This month'];
 
 
-export default function SearchList() {
+export default function SearchList({setCreateVisible}) {
     const _renderItem = (item) => {
         return (
             <TouchableOpacity style={styles.item}>
@@ -15,9 +15,12 @@ export default function SearchList() {
         )
     };
 
-    const _renderItemHeader = (item) => {
+    const _renderItemHeader = () => {
         return (
-            <TouchableOpacity style={styles.itemHeader}>
+            <TouchableOpacity onPress={() => {
+                setCreateVisible(true)
+            }}
+                style={styles.itemHeader}>
                 <AntDesign style={{marginLeft: 5}} name="pluscircle" size={15} color="#274BDB" />
                 <Text style={[styles.itemHeaderText, styles.text]}>Create</Text>
             </TouchableOpacity>

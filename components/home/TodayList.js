@@ -1,32 +1,32 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import Carousel from 'react-native-snap-carousel';
-import {View, Text, Dimensions, StyleSheet, Image, SafeAreaView, TouchableOpacity} from 'react-native'
+import {View, Text, Dimensions, StyleSheet, Image, TouchableOpacity} from 'react-native'
+import config from "../../constants/Config";
 let deviceWidth = Dimensions.get('window').width;
 
-const DATA = [
-    {
-        "id": 1,
-        "title": "Title 1",
-        "description": null,
-    },
-    {
-        "id": 2,
-        "title": "Title 2",
-        "description": "cool event  2",
-    },
-    {
-        "id": 3,
-        "title": "ant.ledu@free.fr",
-        "description": "aaaaaaaa",
-    },
-    {
-        "id": 4,
-        "title": "ant.ledu@free.fr",
-        "description": "aaaaaaaa",
-    }
-];
-
 export default function TodayList() {
+    const [data, setData] = useState([]);
+
+    useEffect(() => {
+        getTodayList();
+    }, []);
+
+    const getTodayList = () => {
+        fetch(config.addr + '/events/search?q=', {
+            method: 'GET',
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json'
+            },
+        }).then((response) => {
+            return response.json()}).then(responseJson => {
+            console.log(responseJson);
+            setData(responseJson);
+        }).catch((error) => {
+            console.error(error);
+        });
+    };
+
     const _renderItem = ({item, index}) => {
         return (
             <TouchableOpacity style={styles.itemContainer}>
@@ -45,7 +45,7 @@ export default function TodayList() {
             <Text style={{fontSize: 24, marginLeft: 20, marginBottom: 10, marginTop: 10, fontWeight: '600'}}>Today</Text>
             <Carousel
                 ref={(c) => { this._carousel = c; }}
-                data={DATA}
+                data={data}
                 renderItem={_renderItem}
                 sliderWidth={deviceWidth}
                 sliderHeight={400}

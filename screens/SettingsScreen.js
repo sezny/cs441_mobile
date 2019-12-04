@@ -49,6 +49,9 @@ export default function SettingsScreen() {
    const[refreshing, setRefreshing] = React.useState(false);
 
 
+    function createEvent(){
+        console.log("Hello")
+    }
 
     selectedDate = new Date();
 

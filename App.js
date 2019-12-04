@@ -8,10 +8,14 @@ import { mapping, light as lightTheme, dark as darkTheme } from '@eva-design/eva
 import { ApplicationProvider } from 'react-native-ui-kitten';
 import AuthenticationScreen from './screens/authentication/AuthenticationScreen'
 import AppNavigator from './navigation/AppNavigator';
+import * as SecureStore from 'expo-secure-store';
 
 export default function App(props) {
   const [isLoadingComplete, setLoadingComplete] = useState(false);
-  const [isLogged, setIsLogged] = useState(true);
+  const [isLogged, setIsLogged] = useState(false);
+  SecureStore.getItemAsync("token").then( token => {
+    if (token) setIsLogged(true);
+  });
 
   if (!isLoadingComplete && !props.skipLoadingScreen) {
     return (
